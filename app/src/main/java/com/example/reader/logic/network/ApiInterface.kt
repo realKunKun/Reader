@@ -10,7 +10,7 @@ import retrofit2.http.*
 interface ApiInterface {
     //@Headers("Content-Type: application/json;charset=UTF-8")
     @POST("Common_war_exploded/sb/findAllBooks")
-    fun findALlBook(@Body Data:DataKey)
+    fun findALlBook(@Body Data:DataKey):Call<NovelDataModel>
 
 
     @POST("Common_war_exploded/su/loginByIdAndPassword")
@@ -18,7 +18,7 @@ interface ApiInterface {
 
 
     @POST("Common_war_exploded/su/loginByAccountAndPassword")
-    fun loginByAccount(@Body data:Data)
+    fun loginByAccount(@Body data:Data):Call<UserDataModel>
 
 
     @POST("Common_war_exploded/su/register")

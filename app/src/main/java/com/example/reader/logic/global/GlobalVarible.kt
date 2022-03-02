@@ -10,5 +10,7 @@ object GlobalVarible {
      var Online:Boolean = false
      lateinit var User:UserDataModel.User
      var BookList=ArrayList<NovelDataModel.Book>()//临时设计的全局变量
-      var cookieList= mutableListOf<Cookie>()
+     var cookieList= mutableListOf<Cookie>()
+     var url:String="https://0236-120-36-50-161.jp.ngrok.io"
+     var LocalMode:Boolean=false
 }

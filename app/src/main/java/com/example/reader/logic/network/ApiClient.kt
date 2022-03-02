@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
 
-    var Url:String="https://c3de-120-36-50-161.jp.ngrok.io"
+    var Url:String=GlobalVarible.url
     val getClient:ApiInterface
     get() {
         val gson=GsonBuilder()

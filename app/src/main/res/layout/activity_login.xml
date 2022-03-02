@@ -21,10 +21,10 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
+        android:maxLength="20"
         android:minHeight="48dp"
-        android:text="Enter Account"
         android:selectAllOnFocus="true"
-        android:maxLength="20"/>
+        android:text="用户名" />
 
     <EditText
         android:id="@+id/editTextTextPassword"
@@ -45,8 +45,9 @@
         <Button
             android:id="@+id/LoginButton"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:text="登入" />
+            android:layout_height="wrap_content"
+            android:text="登入"
+            android:theme="@style/Widget.MaterialComponents.FloatingActionButton" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,16 +57,35 @@
                 android:id="@+id/RegisterButton"
                 android:layout_width="201dp"
                 android:layout_height="wrap_content"
-                android:text="注册" />
+                android:text="注册"
+                android:theme="@style/Widget.MaterialComponents.FloatingActionButton" />
 
             <Button
                 android:id="@+id/LogInTestButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="游客模式" />
+                android:text="游客模式"
+                android:theme="@style/Widget.MaterialComponents.FloatingActionButton"
+                android:outlineAmbientShadowColor="@color/black"
+                android:shadowColor="@color/teal_700"/>
         </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="175dp" />
+
+    <EditText
+        android:id="@+id/editTextURL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:text="输入URL"
+        android:selectAllOnFocus="true"/>
 
 </LinearLayout>

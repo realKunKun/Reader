@@ -27,9 +27,11 @@ class DownLoadRecyclerView (val context: Context, var bookList:ArrayList<NovelDa
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val novel=bookList[position]
+        //使用联网静态资源
         if(!GlobalVarible.Online)Glide.with(context).load("https://qlogo4.store.qq.com/qzone/3238127737/3238127737/100?1610538198").into(holder.Novelimage)
         else {
             Glide.with(context).load(novel.image).into(holder.Novelimage)
+            //将ByteArray转换成bitmap
            // var bitmap = BitmapFactory.decodeByteArray(novel.image, 0, novel.image.size)
             //Glide.with(context).load(bitmap).into(holder.Novelimage)
 

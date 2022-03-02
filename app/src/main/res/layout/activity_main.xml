@@ -49,14 +49,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="搜索" />
+                android:drawableLeft="?android:attr/actionModeWebSearchDrawable"
+                android:text="搜索"
+                android:theme="@style/Widget.MaterialComponents.FloatingActionButton"/>
 
             <Button
                 android:id="@+id/MainPersonalCentreButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="个人中心" />
+                android:text="个人中心"
+                android:theme="@style/Widget.MaterialComponents.FloatingActionButton" />
 
             </LinearLayout>
         </LinearLayout>

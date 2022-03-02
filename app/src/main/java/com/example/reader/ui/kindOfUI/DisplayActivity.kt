@@ -25,6 +25,7 @@ class DisplayActivity : AppCompatActivity() {
     private lateinit var database: Database
     private lateinit var collectionButton: Button
     private lateinit var localBook:NovelDataModel.Book
+    private var hasLiked=false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display)
@@ -50,6 +51,7 @@ class DisplayActivity : AppCompatActivity() {
         //设置
         NovelName.setText("作者: "+book.name)
         NovelIntroduce.setText(book.introduction)
+        //使用网络静态资源
         if(!GlobalVarible.Online) Glide.with(this).load("https://qlogo4.store.qq.com/qzone/3238127737/3238127737/100?1610538198").into(NovelImage)
         else {
             Glide.with(this).load(book.image).into(NovelImage)
@@ -63,23 +65,31 @@ class DisplayActivity : AppCompatActivity() {
         }
         //点赞
         Like.setOnClickListener {
-            var msg=getLikeData(book.id)
-            Toast.makeText(this,msg,Toast.LENGTH_SHORT)
-            if (msg.equals("点赞成功")){
-                book.like_num++
-                likeTextView.setText("点赞数: ${book.like_num}")
-            }
-            else if (msg.equals("已赞过")){
+            if (GlobalVarible.LocalMode==false) {
+                var msg = getLikeData(book.id)
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT)
+                if (msg.equals("点赞成功")) {
+                    if(!hasLiked){
+                        book.like_num++
+                        hasLiked=true}
+                    likeTextView.setText("点赞数: ${book.like_num}")
+                } else if (msg.equals("已赞过")) {
 
-            }
-            else if (msg.equals("点赞失败")) {
-                Toast.makeText(this,"未登入，正造跳转至登入界面",Toast.LENGTH_SHORT)
-                var intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
+                } else if (msg.equals("点赞失败")) {
+                    Toast.makeText(this, "未登入，正造跳转至登入界面", Toast.LENGTH_SHORT)
+                    var intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                } else Toast.makeText(this, "无网络链接", Toast.LENGTH_SHORT)
             }
             else{
-                Toast.makeText(this,"本地刷赞",Toast.LENGTH_SHORT)
-                book.like_num++
+                Toast.makeText(this, "本地(再次点赞即可取消)", Toast.LENGTH_SHORT)
+                if(!hasLiked){
+                    book.like_num++
+                    hasLiked=true}
+                else{
+                    book.like_num--
+                    hasLiked=false
+                }
                 likeTextView.setText("点赞数: ${book.like_num}")
             }
         }
@@ -87,18 +97,25 @@ class DisplayActivity : AppCompatActivity() {
         database=Room.databaseBuilder(applicationContext,Database::class.java,"NovelDataBase").allowMainThreadQueries().build()
         //下载按钮
         DownLoad.setOnClickListener {
-            var responseCode=DownLoadData(book.name)
-            if (responseCode==200){
-                database.dataDao().insertNovel(novelEntity = NovelEntity(book.id,book.name,book.content))
-                Toast.makeText(this,"下载中，书名是： ${database.dataDao().getNovel(book.name)}",Toast.LENGTH_SHORT).show()
-                if (!GlobalVarible.downLoadBook.contains(book)){
-                    GlobalVarible.downLoadBook.add(book)
+            if(!GlobalVarible.LocalMode) {
+                var responseCode = DownLoadData(book.name)
+                if (responseCode == 200) {
+                    database.dataDao()
+                        .insertNovel(novelEntity = NovelEntity(book.id, book.name, book.content))
+                    Toast.makeText(
+                        this,
+                        "下载中，书名是： ${database.dataDao().getNovel(book.name)}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    if (!GlobalVarible.downLoadBook.contains(book)) {
+                        GlobalVarible.downLoadBook.add(book)
+                    }
+                } else if (responseCode == 510) Toast.makeText(this, "重新登入", Toast.LENGTH_SHORT)
+                    .show()
+                else if (responseCode == 404) Toast.makeText(this, "无此书", Toast.LENGTH_SHORT).show()
+                else {
+                    Toast.makeText(this, "无网络连接", Toast.LENGTH_SHORT).show()
                 }
-            }
-            else if (responseCode==510)Toast.makeText(this,"重新登入",Toast.LENGTH_SHORT).show()
-            else if (responseCode==404)Toast.makeText(this,"无此书",Toast.LENGTH_SHORT).show()
-            else {
-                Toast.makeText(this, "无网络连接", Toast.LENGTH_SHORT).show()
             }
             //添加至个人中心下载列表
             var intentToPC=Intent(this,Personal_CentreActivity::class.java)
@@ -107,7 +124,7 @@ class DisplayActivity : AppCompatActivity() {
         }
         //本地阅读
         LocalRead.setOnClickListener {
-            if (GlobalVarible.Online==false)  {
+            if (!GlobalVarible.Online || GlobalVarible.LocalMode)  {
                 //测试数据
                 if (!GlobalVarible.downLoadBook.contains(book)){
                     GlobalVarible.downLoadBook.add(book)
@@ -133,22 +150,21 @@ class DisplayActivity : AppCompatActivity() {
             GlobalVarible.collectionBook.add(book)
             }
             //网络模块
-            if (getCollectionData(book.id).equals("收藏成功")){
-                Toast.makeText(this,"已收藏",Toast.LENGTH_SHORT)
-                if (!GlobalVarible.collectionBook.contains(book)){
-                    GlobalVarible.collectionBook.add(book)
-                }
+            if (!GlobalVarible.LocalMode) {
+                if (getCollectionData(book.id).equals("收藏成功")) {
+                    Toast.makeText(this, "已收藏", Toast.LENGTH_SHORT)
+                    if (!GlobalVarible.collectionBook.contains(book)) {
+                        GlobalVarible.collectionBook.add(book)
+                    }
+                } else if (getCollectionData(book.id).equals("取消点赞")) {
+                    Toast.makeText(this, "取消收藏", Toast.LENGTH_SHORT)
+                    GlobalVarible.collectionBook.remove(book)
+                } else if (getCollectionData(book.id).equals("收藏失败")) {
+                    Toast.makeText(this, "收藏失败,未登入，正造跳转至登入界面", Toast.LENGTH_SHORT)
+                    var intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                } else Toast.makeText(this, "进行本地收藏", Toast.LENGTH_SHORT)
             }
-            else if(getCollectionData(book.id).equals("取消点赞")){
-                Toast.makeText(this,"取消收藏",Toast.LENGTH_SHORT)
-                GlobalVarible.collectionBook.remove(book)
-            }
-            else if (getCollectionData(book.id).equals("收藏失败")){
-                Toast.makeText(this,"收藏失败,未登入，正造跳转至登入界面",Toast.LENGTH_SHORT)
-                var intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-            }
-            else  Toast.makeText(this,"进行本地收藏",Toast.LENGTH_SHORT)
         }
     }
     //点赞网络接口
@@ -210,14 +226,12 @@ class DisplayActivity : AppCompatActivity() {
         val call:Call<NullDataModel> = ApiClient.getClient.addColl(data)
         call.enqueue(object :Callback<NullDataModel>{
             override fun onResponse(call: Call<NullDataModel>, response: Response<NullDataModel>) {
-                GlobalVarible.Online=true
                 response?.let {
                     it.body()?.let {
                         str=it.msg
                     }
                 }
             }
-
             override fun onFailure(call: Call<NullDataModel>, t: Throwable) {
                 Log.d("message","false")
                 str="无网络连接"

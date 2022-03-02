@@ -18,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#BFBDBD"
-            android:queryHint="Search by novel name" />
+            android:queryHint="输入关键字进行搜索"
+            android:selectAllOnFocus="true"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/SortRecyclerView"

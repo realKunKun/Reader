@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         //初始化本地数据
         initList()
         //第一次检测用户是否登入
-        if (GlobalVarible.Online==false){
+        if (!GlobalVarible.Online && !GlobalVarible.LocalMode){
             var intent=Intent(this,LoginActivity::class.java)
             startActivityForResult(intent,1)
             finish()
@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity() {
     }
     //本地信息初始化
     private fun initList() {
+        //初始化本地参数
         val str=R.drawable.loading.toString()
         NovelList.add(NovelDataModel.Book(114,"子曰",514,str,"1919","810"))
         NovelList.add(NovelDataModel.Book(114,"衣衣事",514,str,"1919","810"))
@@ -98,7 +99,7 @@ class MainActivity : AppCompatActivity() {
             GlobalVarible.collectionBook.add(x)
         }
     }
-    //网络调取信息
+    //该功能转移至登入界面，在登入的同时调取小说信息,简化网络初始化过程
     /*
     private fun getData():Int{
         var code:Int=111

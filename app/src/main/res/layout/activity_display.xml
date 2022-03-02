@@ -52,19 +52,22 @@
                 android:id="@+id/DIsplayLikebutton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="喜欢" />
+                android:text="喜欢"
+                android:theme="@style/Widget.MaterialComponents.FloatingActionButton"/>
 
             <Button
                 android:id="@+id/Displaybutton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="开读" />
+                android:text="开读"
+                android:theme="@style/Widget.MaterialComponents.FloatingActionButton"/>
 
             <Button
                 android:id="@+id/DisplayCollectionbutton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="收藏" />
+                android:text="收藏"
+                android:theme="@style/Widget.MaterialComponents.FloatingActionButton"/>
 
         </LinearLayout>
 
@@ -80,14 +83,17 @@
             android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:text="下载"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:theme="@style/Widget.MaterialComponents.FloatingActionButton"/>
 
         <Button
             android:id="@+id/DisplayLocalReadButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="本地阅读" />
+            android:text="本地阅读"
+            android:theme="@style/Widget.MaterialComponents.FloatingActionButton"
+            />
     </LinearLayout>
 
     <ScrollView
