@@ -19,7 +19,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/purple_200"
+            android:background="#60EDD1"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/Theme.MaterialComponents.Light"
             app:title="主页面" />
         <ProgressBar
             android:id="@+id/MainprogressBar"
@@ -68,7 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#FFF"
-        android:text="主页面菜单，不过没时间实现了"
+        android:background="#7AF1D9"
+        android:text="主页面菜单(个人中心)"
         android:textSize="30sp" />
 </androidx.drawerlayout.widget.DrawerLayout>

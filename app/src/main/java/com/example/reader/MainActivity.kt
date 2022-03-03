@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -31,6 +32,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val toolbar:androidx.appcompat.widget.Toolbar=findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+
         //初始化本地数据
         initList()
         //第一次检测用户是否登入
@@ -84,16 +89,16 @@ class MainActivity : AppCompatActivity() {
     private fun initList() {
         //初始化本地参数
         val str=R.drawable.loading.toString()
-        NovelList.add(NovelDataModel.Book(114,"子曰",514,str,"1919","810"))
-        NovelList.add(NovelDataModel.Book(114,"衣衣事",514,str,"1919","810"))
-        NovelList.add(NovelDataModel.Book(114,"吾衣是",514,str,"1919","810"))
-        NovelList.add(NovelDataModel.Book(114,"依旧",514,str,"1919","810"))
-        NovelList.add(NovelDataModel.Book(114,"依旧",514,str,"1919","810"))
-        NovelList.add(NovelDataModel.Book(114,"罢矣凛",514,str,"1919","810"))
-        NovelList.add(NovelDataModel.Book(114,"罢矣凛",514,str,"1919","810"))
-        var list= listOf(NovelDataModel.Book(114,"鲤鱼",514,str,"1919","810"),
-            NovelDataModel.Book(114,"衣衣事",514,str,"1919","810"))
-        User= UserDataModel.User(111,"111","111",list,"2222222222222")
+        NovelList.add(NovelDataModel.Book(114,"子曰",514,str,GlobalVarible.Texttest,GlobalVarible.introduction))
+        NovelList.add(NovelDataModel.Book(114,"衣衣事",514,str,GlobalVarible.Texttest,GlobalVarible.introduction))
+        NovelList.add(NovelDataModel.Book(114,"吾衣是",514,str,GlobalVarible.Texttest,GlobalVarible.introduction))
+        NovelList.add(NovelDataModel.Book(114,"依旧",514,str,GlobalVarible.Texttest,GlobalVarible.introduction))
+        NovelList.add(NovelDataModel.Book(114,"依旧",514,str,GlobalVarible.Texttest,GlobalVarible.introduction))
+        NovelList.add(NovelDataModel.Book(114,"罢矣凛",514,str,GlobalVarible.Texttest,GlobalVarible.introduction))
+        NovelList.add(NovelDataModel.Book(114,"罢矣凛",514,str,GlobalVarible.Texttest,GlobalVarible.introduction))
+        var list= listOf(NovelDataModel.Book(114,"鲤鱼",514,str,GlobalVarible.Texttest,GlobalVarible.introduction),
+            NovelDataModel.Book(114,"衣衣事",514,str,GlobalVarible.Texttest,GlobalVarible.introduction))
+        User= UserDataModel.User(111,"111","111",list,GlobalVarible.introduction)
         GlobalVarible.User=User
         for (x in User.collBooks) {
             GlobalVarible.collectionBook.add(x)
@@ -121,18 +126,11 @@ class MainActivity : AppCompatActivity() {
                             Log.d("message","登入成功")
                         }
                         //其他情况
-                        else { code=it.code }
-                    } }
-            }
+                        else { code=it.code }} }}
             override fun onFailure(call: Call<NovelDataModel>, t: Throwable) {
                 progressBar.incrementProgressBy(-10)
                 Log.d("message","主页面网络连接失败")
-            }
-
-        })
-        return code
-    }
-
+            }})return code}
      */
     //设置页面间传输参数
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
