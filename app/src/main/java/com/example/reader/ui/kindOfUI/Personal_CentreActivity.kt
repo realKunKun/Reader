@@ -29,7 +29,6 @@ class Personal_CentreActivity : AppCompatActivity() {
     private lateinit var downloadRecyclerView: RecyclerView
     private lateinit var logout:Button
     private lateinit var logIn:Button
-    private lateinit var user:UserDataModel.User
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_personal_centre)
@@ -43,8 +42,6 @@ class Personal_CentreActivity : AppCompatActivity() {
             //设置横向滚动
             val layoutManager = LinearLayoutManager(this)
             layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        //个人信息接收
-        user=GlobalVarible.User
         //初始化
         initList()
         //收藏列表

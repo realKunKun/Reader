@@ -46,10 +46,6 @@ class DisplayActivity : AppCompatActivity() {
             it.setDisplayHomeAsUpEnabled(true)
             it.setHomeButtonEnabled(true)
         }
-
-
-
-
         //设置
         NovelName.setText("作者: "+book.name)
         NovelIntroduce.setText(book.introduction)
@@ -103,7 +99,7 @@ class DisplayActivity : AppCompatActivity() {
                 }
                 Toast.makeText(this, "无网络连接，将使用本地测试数据", Toast.LENGTH_SHORT).show()
                 database.dataDao().insertNovel(novelEntity = NovelEntity(book.id,"模拟长篇",GlobalVarible.Textlocal))
-                localBook=GlobalVarible.collectionBook[0]
+                localBook=GlobalVarible.downLoadBook[GlobalVarible.downLoadBook.size-1]
                 localBook.content=database.dataDao().getNovel("模拟长篇")}
             else {
                 Toast.makeText(this, "下载成功，开始阅读", Toast.LENGTH_SHORT).show()

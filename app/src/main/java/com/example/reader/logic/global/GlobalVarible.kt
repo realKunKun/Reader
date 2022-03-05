@@ -13,6 +13,7 @@ object GlobalVarible {
      var cookieList= mutableListOf<Cookie>()
      var url:String="https://0236-120-36-50-161.jp.ngrok.io"
      var LocalMode:Boolean=false
+     var once=false
      val Texttest="可堇-bad end1\n" +
              "触发条件：可可没有在nonfiction开演之前认可堇，关键道具王冠未得到。\n" +
              "\n" +

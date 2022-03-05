@@ -156,7 +156,7 @@ class LoginActivity : AppCompatActivity() {
     private fun getBookData(){
         //今天忙了一天，还是很遗憾解决不了报错问题，不过我觉得我理清了一点原因，首先，
         //因为小说的内容数据量比较大，而且后端传输的时候是以所有小说的各类数据（包含小说的内容和图片）一并传过来，导致缓存不足（猜测）的情况。
-        //故，尝试采用先读取json内容，然后再进行转换的方式进行读取，设计及代码如下所示。但是这个结构还是有bug，暂时实现不了
+        //故，尝试采用先读取json内容，然后再进行转换的方式进行读取，设计及代码如下所示。但是这个结构还是有bug，目前实现不了
         thread{
             var json = JSONArray()
             val interceptor= HttpLoggingInterceptor()

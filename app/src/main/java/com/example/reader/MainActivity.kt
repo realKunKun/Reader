@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var personalCentre:Button
     private lateinit var progressBar: ProgressBar
     private var NovelList=ArrayList<NovelDataModel.Book>()
-    private lateinit var User:UserDataModel.User//仅用于初始化本地信息，网络用户信息已归属于全局信息
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -88,50 +87,91 @@ class MainActivity : AppCompatActivity() {
     //本地信息初始化
     private fun initList() {
         //初始化本地参数
-        val str=R.drawable.loading.toString()
-        NovelList.add(NovelDataModel.Book(114,"子曰",514,str,GlobalVarible.Texttest,GlobalVarible.introduction))
-        NovelList.add(NovelDataModel.Book(114,"衣衣事",514,str,GlobalVarible.Texttest,GlobalVarible.introduction))
-        NovelList.add(NovelDataModel.Book(114,"吾衣是",514,str,GlobalVarible.Texttest,GlobalVarible.introduction))
-        NovelList.add(NovelDataModel.Book(114,"依旧",514,str,GlobalVarible.Texttest,GlobalVarible.introduction))
-        NovelList.add(NovelDataModel.Book(114,"依旧",514,str,GlobalVarible.Texttest,GlobalVarible.introduction))
-        NovelList.add(NovelDataModel.Book(114,"罢矣凛",514,str,GlobalVarible.Texttest,GlobalVarible.introduction))
-        NovelList.add(NovelDataModel.Book(114,"罢矣凛",514,str,GlobalVarible.Texttest,GlobalVarible.introduction))
-        var list= listOf(NovelDataModel.Book(114,"鲤鱼",514,str,GlobalVarible.Texttest,GlobalVarible.introduction),
-            NovelDataModel.Book(114,"衣衣事",514,str,GlobalVarible.Texttest,GlobalVarible.introduction))
-        User= UserDataModel.User(111,"111","111",list,GlobalVarible.introduction)
-        GlobalVarible.User=User
-        for (x in User.collBooks) {
-            GlobalVarible.collectionBook.add(x)
-        }
+            val str = R.drawable.loading.toString()
+            NovelList.add(
+                NovelDataModel.Book(
+                    114,
+                    "子曰",
+                    514,
+                    str,
+                    GlobalVarible.Texttest,
+                    GlobalVarible.introduction
+                )
+            )
+            NovelList.add(
+                NovelDataModel.Book(
+                    114,
+                    "衣衣事",
+                    514,
+                    str,
+                    GlobalVarible.Texttest,
+                    GlobalVarible.introduction
+                )
+            )
+            NovelList.add(
+                NovelDataModel.Book(
+                    114,
+                    "吾衣是",
+                    514,
+                    str,
+                    GlobalVarible.Texttest,
+                    GlobalVarible.introduction
+                )
+            )
+            NovelList.add(
+                NovelDataModel.Book(
+                    114,
+                    "依旧",
+                    514,
+                    str,
+                    GlobalVarible.Texttest,
+                    GlobalVarible.introduction
+                )
+            )
+            NovelList.add(
+                NovelDataModel.Book(
+                    114,
+                    "依旧",
+                    514,
+                    str,
+                    GlobalVarible.Texttest,
+                    GlobalVarible.introduction
+                )
+            )
+            NovelList.add(
+                NovelDataModel.Book(
+                    114,
+                    "罢矣凛",
+                    514,
+                    str,
+                    GlobalVarible.Texttest,
+                    GlobalVarible.introduction
+                )
+            )
+            NovelList.add(
+                NovelDataModel.Book(
+                    114,
+                    "罢矣凛",
+                    514,
+                    str,
+                    GlobalVarible.Texttest,
+                    GlobalVarible.introduction
+                )
+            )
+            GlobalVarible.User = UserDataModel.User(111, "111", "JBJKEBEBHE", GlobalVarible.collectionBook, "测试账号")
+        if (!GlobalVarible.once) {
+            GlobalVarible.collectionBook.add(
+                NovelDataModel.Book(
+                    114,
+                    "鲤鱼",
+                    514,
+                    str,
+                    GlobalVarible.Texttest,
+                    GlobalVarible.introduction
+                )
+            )
+        GlobalVarible.once=true}
     }
-    //该功能转移至登入界面，在登入的同时调取小说信息,简化网络初始化过程
-    /*
-    private fun getData():Int{
-        var code:Int=111
-        var data= DataKey(GlobalVarible.User.token)
-        val call: Call<NovelDataModel> = ApiClient.getClient.findALlBook(data)
-        call.enqueue(object : Callback<NovelDataModel> {
-            override fun onResponse(call: Call<NovelDataModel>, response: Response<NovelDataModel>
-            ) {Log.d("message","登入成功")
-                progressBar.incrementProgressBy(20)
-                response?.let {
-                    it.body()?.let {
-                        if(it.code==200) {
-                            //重置小说组并刷新数据
-                            NovelList.clear()
-                            for (x in it.data) { NovelList.add(x) }//将收到的小说数据置入并刷新适配器
-                            MyRecyclerView.adapter?.notifyDataSetChanged()
-                            progressBar.max
-                            code=it.code
-                            Log.d("message","登入成功")
-                        }
-                        //其他情况
-                        else { code=it.code }} }}
-            override fun onFailure(call: Call<NovelDataModel>, t: Throwable) {
-                progressBar.incrementProgressBy(-10)
-                Log.d("message","主页面网络连接失败")
-            }})return code}
-     */
     //设置页面间传输参数
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
